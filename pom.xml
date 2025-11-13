@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- region project data -->
+    <groupId>org.white_sdev.templates</groupId>
+    <artifactId>white-utils</artifactId>
+    <version>1.0.0</version>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A lightweight library containing shared and generic utility classes for Java-based projects.</description>
+    <!-- This section (packaging) is defined because the project is meant to be a library and a JAR will be generated. -->
+    <packaging>jar</packaging>
+    <!--endregion-->
+
+    <properties>
+        <!-- region Configure Java version & Main full package and class name -->
+        <!-- WARNING: add release scope if 1.9 and older versions are used at build/plugins/plugin/[maven-compiler-plugin]/configuration-->
+        <java.version>8</java.version>
+        <!--endregion-->
+        <!-- region General configurations of the project -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <junit.jupiter.version>5.9.2</junit.jupiter.version>
+        <junit.platform.version>1.3.2</junit.platform.version>
+        <surefire.failsafe.plugin.version>3.0.0-M8</surefire.failsafe.plugin.version>
+        <surefire.version>2.22.2</surefire.version>
+        <skipTests>false</skipTests>
+        <skipITs>${skipTests}</skipITs>
+        <skipUTs>${skipTests}</skipUTs>
+        <logs.path>${project.build.directory}/test-reports/logs</logs.path>
+        </properties>
+
+    <repositories>
+        <!-- region GiHub JitPack.io dependencies -->
+        <!-- only if you want to work with JitPack.io for the GitHub dependencies -->
+<!--            <repository>-->
+<!--                <id>jitpack.io</id>-->
+<!--                <url>https://jitpack.io</url>-->
+<!--            </repository>-->
+        <!-- endregion GiHub JitPack.io dependencies -->
+    </repositories>
+
+    <dependencies>
+
+        <!-- region Testing (No-Spring) -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-engine</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+        <!-- endregion Testing -->
+
+        <!-- region IntelliJ plugins dependencies (currently deactivated) -->
+<!--        &lt;!&ndash; these will solve the issues with IntelliJ plugin identification problems &ndash;&gt;-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-surefire-plugin</artifactId>-->
+<!--            <version>${surefire.failsafe.plugin.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--            <version>${surefire.failsafe.plugin.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-assembly-plugin</artifactId>-->
+<!--            <version>3.4.2</version>-->
+<!--        </dependency>-->
+        <!-- endregion IntelliJ plugins dependencies -->
+
+        <!-- region No Spring Logging -->
+        <!-- region Lombok -->
+        <!-- Lombok is already being imported by `spring-boot-starter-parent` and the 3.0.0 version imports uses lombok version [org.projectlombok:lombok:1.18.26] -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <version>1.18.24</version>-->
+<!--            <type>jar</type>-->
+<!--        </dependency>-->
+        <!-- endregion Lombok -->
+
+        <!-- region JCL -->
+        <!-- hooks lombok with the Sl4fj Provider -->
+        <!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>jcl-over-slf4j</artifactId>-->
+<!--            <version>2.0.5</version>-->
+<!--        </dependency>-->
+        <!-- endregion JCL -->
+
+        <!-- region Sl4fj Provider -->
+        <!-- https://www.slf4j.org/codes.html#noProviders -->
+        <!-- This is the one Spring uses -->
+        <!-- https://logback.qos.ch/manual/layouts.html -->
+        <!-- this will allow you to use logback-test.xml file -->
+        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+        <!-- requires slf4j-api & logback-core (Lombok includes it) -->
+<!--        <dependency>-->
+<!--            <groupId>ch.qos.logback</groupId>-->
+<!--            <artifactId>logback-classic</artifactId>-->
+<!--            <version>1.4.5</version>-->
+<!--        </dependency>-->
+        <!-- endregion SL4fj Provider -->
+        <!-- region No Spring Logging -->
+
+    </dependencies>
+
+
+    <!-- region Profiles -->
+    <profiles>
+        <profile>
+            <id>disable-java8-doc-lint</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+<!--                <jdk>[1.8,)</jdk>-->
+            </activation>
+            <properties>
+                <!-- region disable DockLint -->
+                <!-- Eliminates the JavaDoc problems in later versions when you have problems in the documentation -->
+                <doclint>none</doclint>
+                <!-- endregion disable DockLint -->
+<!--                <name>spring.profiles.active</name>-->
+<!--                <value>disable-java8-doc-lint</value>-->
+                <activatedProperties>disable-java8-doc-lint</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>headless</id>
+<!--            <activation>-->
+<!--                <jdk>[1.8,)</jdk>-->
+<!--            </activation>-->
+            <properties>
+                <!-- region disable DockLint -->
+                <!-- Eliminates the JavaDoc problems in later versions when you have problems in the documentation -->
+                <doclint>none</doclint>
+                <!-- endregion disable DockLint -->
+                <excluded.tags>ExcludeWhenHeadless</excluded.tags>
+<!--                <name>spring.profiles.active</name>-->
+<!--                <value>headless</value>-->
+                <activatedProperties>headless</activatedProperties>
+            </properties>
+        </profile>
+    </profiles>
+    <!-- endregion Profiles -->
+
+    <build>
+<!--        <finalName>${project.artifactId}</finalName>-->
+        <plugins>
+            <!-- region Established the java version defined in the properties' section for every scope (compatible with newer java versions) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <!-- WARNING: add release property for 1.9 and older versions -->
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+            <!-- endregion -->
+
+            <!-- region Maven Generates JavaDocs of the project and adds it to the generated JAR-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <detectJavaApiLink>false</detectJavaApiLink>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--endregion-->
+
+            <!-- region Maven is able to run JUnit5 Unit Tests (surefire) -->
+            <!-- This requires junit-jupiter-engine [in junit-jupiter] dependency! -->
+            <!-- This will run everything that Starts or ends with Test[(Case)|s]{0-1}. -->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-surefire-plugin</artifactId>-->
+<!--                <version>${surefire.failsafe.plugin.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution><goals><goal>test</goal></goals></execution>-->
+<!--                </executions>-->
+<!--&lt;!&ndash;                <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <reportsDirectory>${logs.path}</reportsDirectory>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <redirectTestOutputToFile>true</redirectTestOutputToFile>&ndash;&gt;-->
+<!--&lt;!&ndash;                </configuration>&ndash;&gt;-->
+
+<!--                &lt;!&ndash; region Deprecated in 3.0.0-M4 &ndash;&gt;-->
+<!--                &lt;!&ndash; above M3 will get this on its own, but it will not let you know,-->
+<!--                    it will just throw a problem with org/apache/maven/surefire/booter/ForkedProcessEvent &ndash;&gt;-->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.junit.platform</groupId>-->
+<!--                        <artifactId>junit-platform-surefire-provider</artifactId>-->
+<!--                        <version>RELEASE</version>-->
+<!--                    </dependency>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.junit.jupiter</groupId>-->
+<!--                        <artifactId>junit-jupiter-engine</artifactId>-->
+<!--                        <version>RELEASE</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--                &lt;!&ndash; endregion Deprecated in 3.0.0-M4 &ndash;&gt;-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <executions>
+                    <execution><goals><goal>test</goal></goals></execution>
+                </executions>
+                <configuration>
+                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                    <reportsDirectory>${logs.path}</reportsDirectory>
+                    <!-- override sufrefire plugins behaviors, provided by: https://stackoverflow.com/questions/6612344/prevent-unit-tests-but-allow-integration-tests-in-maven#:~:text=%20%3Cskiptests%3E%24%7Bskiptests%7D%3C%2Fskiptests%3E%20%3Cskipits%3E%24%7Bskipits%7D%3C%2Fskipits%3E -->
+                    <skipTests>${skipUTs}</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- region surefire-report Generates an HTML report -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>${surefire.failsafe.plugin.version}</version>
+                <configuration>
+<!--                    <reportsDirectories>${logs.path}</reportsDirectories>-->
+                    <reportsDirectories>
+                        <reportsDirectory>${logs.path}</reportsDirectory>
+                    </reportsDirectories>
+                </configuration>
+            </plugin>
+            <!-- endregion surefire-report Generates an HTML report -->
+
+            <!-- endregion -->
+
+            <!-- region Maven runs Integration Tests -->
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${surefire.failsafe.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <reportsDirectory>${logs.path}</reportsDirectory>
+                    <!--suppress MavenModelInspection -->
+                    <excludedGroups>${excluded.tags}</excludedGroups>
+                    <!-- override sufrefire plugins behaviors, provided by: https://stackoverflow.com/questions/6612344/prevent-unit-tests-but-allow-integration-tests-in-maven#:~:text=%20%3Cskiptests%3E%24%7Bskiptests%7D%3C%2Fskiptests%3E%20%3Cskipits%3E%24%7Bskipits%7D%3C%2Fskipits%3E -->
+                    <skipTests>${skipTests}</skipTests>
+                    <skipITs>${skipITs}</skipITs>
+                </configuration>
+            </plugin>
+            <!-- endregion Maven runs Integration Tests -->
+        </plugins>
+    </build>
+
+</project>
