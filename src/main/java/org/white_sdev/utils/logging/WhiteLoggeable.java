@@ -1,5 +1,6 @@
-package com.white_sdev.utils.logging;
+package org.white_sdev.utils.logging;
 
+@SuppressWarnings("unused")
 public interface WhiteLoggeable {
     
     /**
@@ -146,11 +147,11 @@ public interface WhiteLoggeable {
         String formatted = "::{}: " + message;
         Object[] combinedArgs = combineArgs(methodSignatureRepresentation, args);
         switch (level) {
-            case TRACE -> logger.trace(formatted, combinedArgs);
-            case DEBUG -> logger.debug(formatted, combinedArgs);
-            case INFO  -> logger.info(formatted, combinedArgs);
-            case WARN  -> logger.warn(formatted, combinedArgs);
-            case ERROR -> logger.error(formatted, combinedArgs);
+            case TRACE : logger.trace(formatted, combinedArgs);
+            case DEBUG : logger.debug(formatted, combinedArgs);
+            case INFO  : logger.info(formatted, combinedArgs);
+            case WARN  : logger.warn(formatted, combinedArgs);
+            case ERROR : logger.error(formatted, combinedArgs);
         }
     }
 

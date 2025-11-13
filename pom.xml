@@ -32,6 +32,7 @@
         <skipITs>${skipTests}</skipITs>
         <skipUTs>${skipTests}</skipUTs>
         <logs.path>${project.build.directory}/test-reports/logs</logs.path>
+        <slf4j.version>2.0.9</slf4j.version>
         </properties>
 
     <repositories>
@@ -45,7 +46,6 @@
     </repositories>
 
     <dependencies>
-
         <!-- region Testing (No-Spring) -->
         <dependency>
             <groupId>org.junit.platform</groupId>
@@ -53,6 +53,14 @@
             <version>1.9.2</version>
         </dependency>
         <!-- endregion Testing -->
+
+        <!-- region SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- endregion SLF4J -->
 
         <!-- region IntelliJ plugins dependencies (currently deactivated) -->
 <!--        &lt;!&ndash; these will solve the issues with IntelliJ plugin identification problems &ndash;&gt;-->
@@ -78,44 +86,6 @@
 <!--            <version>3.4.2</version>-->
 <!--        </dependency>-->
         <!-- endregion IntelliJ plugins dependencies -->
-
-        <!-- region No Spring Logging -->
-        <!-- region Lombok -->
-        <!-- Lombok is already being imported by `spring-boot-starter-parent` and the 3.0.0 version imports uses lombok version [org.projectlombok:lombok:1.18.26] -->
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <version>1.18.24</version>-->
-<!--            <type>jar</type>-->
-<!--        </dependency>-->
-        <!-- endregion Lombok -->
-
-        <!-- region JCL -->
-        <!-- hooks lombok with the Sl4fj Provider -->
-        <!-- https://mvnrepository.com/artifact/org.slf4j/jcl-over-slf4j -->
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>jcl-over-slf4j</artifactId>-->
-<!--            <version>2.0.5</version>-->
-<!--        </dependency>-->
-        <!-- endregion JCL -->
-
-        <!-- region Sl4fj Provider -->
-        <!-- https://www.slf4j.org/codes.html#noProviders -->
-        <!-- This is the one Spring uses -->
-        <!-- https://logback.qos.ch/manual/layouts.html -->
-        <!-- this will allow you to use logback-test.xml file -->
-        <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-        <!-- requires slf4j-api & logback-core (Lombok includes it) -->
-<!--        <dependency>-->
-<!--            <groupId>ch.qos.logback</groupId>-->
-<!--            <artifactId>logback-classic</artifactId>-->
-<!--            <version>1.4.5</version>-->
-<!--        </dependency>-->
-        <!-- endregion SL4fj Provider -->
-        <!-- region No Spring Logging -->
-
     </dependencies>
 
 
