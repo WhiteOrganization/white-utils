@@ -1,0 +1,51 @@
+name: Detect version change and create tag
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  detect-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed so we can create tags
+
+      - name: Extract version from pom.xml
+        id: version
+        run: |
+          VERSION=$(xmllint --xpath "string(//project/version)" pom.xml)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get previous version from last tag (if any)
+        id: prev
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "lasttag=$LAST_TAG" >> $GITHUB_OUTPUT
+
+      - name: Determine whether to release
+        id: decide
+        run: |
+          CUR="${{ steps.version.outputs.version }}"
+          LAST="${{ steps.prev.outputs.lasttag }}"
+          LAST="${LAST#v}"   # strip leading v if present
+
+          if [ "$CUR" = "$LAST" ]; then
+            echo "release=false" >> $GITHUB_OUTPUT
+          else
+            echo "release=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create tag and GitHub Release (only if version changed)
+        if: steps.decide.outputs.release == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: Release v${{ steps.version.outputs.version }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
