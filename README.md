@@ -36,20 +36,19 @@ WhiteUtils is designed to be as generic and dependency-minimal as possible so it
 ```java
 @Slf4j
 public class MyService implements WhiteLoggeable {
-    
-    @Override public Logger getLogger() { return log;}
+    @Override public org.slf4j.Logger getLogger() { return log;}
     
     public void myProcess(String name, int age) {
-        var wlog = withSignature("myProcess(name, age)");
-        wlog.start("Processing user {}", name);
+        var log = withSignature("myProcess(name, age)");
+        log.start("Processing user {} with age {}", name, age);
 
-        wlog.debug("User age is {}", age);
+        log.debug("User age is {}", age);
         if (age < 18) {
-            wlog.warn("User {} is a minor", name);
+            log.warn("User {} is a minor", name);
         }
+        log.info("User processed successfully");
         
-        wlog.info("User processed successfully");
-        wlog.end();
+        log.end("age is now {}", age);
     }
 }
 ```
