@@ -1,6 +1,6 @@
 # White_Utils – Java Utility Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.white-sdev/white-utils.svg)](https://search.maven.org/artifact/io.github.white-sdev/white-utils)
+[![Maven Central](https://img.shields.io/maven-central/v/mx.whiteweb.sdev/white-utils.svg)](https://search.maven.org/artifact/mx.whiteweb.sdev/white-utils)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
 
@@ -9,7 +9,7 @@ A lightweight library containing shared and generic utility classes for Java-bas
 ## 1) What is this repository for?
 
 ### 1.1) Quick summary
-Version: `1.0.3`
+Version: `1.0.4`
 
 **White_Utils** is a public Java library that provides standardized and generic utility classes to simplify common operations such as logging, formatting, and general helper functions across Java and Maven projects.
 It is published for public consumption and is also used as a standard within White Organization.
@@ -23,9 +23,9 @@ WhiteUtils is designed to be as generic and dependency-minimal as possible so it
 **Add dependency (example):**
 ```xml
 <dependency>
-    <groupId>io.github.white-sdev</groupId>
+    <groupId>mx.whiteweb.sdev</groupId>
     <artifactId>white-utils</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 </dependency>
 ```
 

@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- region project data -->
-    <groupId>io.github.white-sdev</groupId>
+    <groupId>mx.whiteweb.sdev</groupId>
     <artifactId>white-utils</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A lightweight library containing shared and generic utility classes for Java-based projects.</description>
     <url>https://github.com/WhiteOrganization/white-utils</url>
