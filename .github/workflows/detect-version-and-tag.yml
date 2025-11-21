@@ -11,6 +11,11 @@ jobs:
     permissions:
       contents: write
 
+    outputs:
+      release: ${{ steps.decide.outputs.release }}
+
+
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -55,3 +60,11 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish-release:
+    needs: detect-version
+    if: needs.detect-version.outputs.release == 'true'
+    uses: ./.github/workflows/publish-to-central.yml
+    secrets: inherit
+
+
