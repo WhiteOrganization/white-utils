@@ -1,6 +1,6 @@
 # White_Utils – Java Utility Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.whiteorganization/whiteutils.svg)](https://search.maven.org/artifact/com.whiteorganization/whiteutils)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.white-sdev/white-utils.svg)](https://search.maven.org/artifact/io.github.white-sdev/white-utils)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
 
@@ -23,7 +23,7 @@ WhiteUtils is designed to be as generic and dependency-minimal as possible so it
 **Add dependency (example):**
 ```xml
 <dependency>
-    <groupId>com.whiteorganization</groupId>
+    <groupId>io.github.white-sdev</groupId>
     <artifactId>white-utils</artifactId>
     <version>1.0.1</version>
 </dependency>

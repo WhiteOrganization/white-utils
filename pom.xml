@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- region project data -->
-    <groupId>io.github.whiteorganization</groupId>
+    <groupId>io.github.white-sdev</groupId>
     <artifactId>white-utils</artifactId>
     <version>1.0.1</version>
     <name>${project.groupId}:${project.artifactId}</name>
