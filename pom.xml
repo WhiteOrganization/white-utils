@@ -305,7 +305,7 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <!-- WARNING: add release property for 1.9 and older versions -->
-                    <release>${java.version}</release>
+<!--                    <release>${java.version}</release>-->
                 </configuration>
             </plugin>
             <!-- endregion -->

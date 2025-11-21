@@ -20,4 +20,4 @@ jobs:
           java-version: 8
 
       - name: Build + verify
-        run: mvn -B -e -DskipTests=false verify
+        run: mvn -B -e -DskipTests=false verify -X
