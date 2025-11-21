@@ -9,7 +9,7 @@ A lightweight library containing shared and generic utility classes for Java-bas
 ## 1) What is this repository for?
 
 ### 1.1) Quick summary
-Version: `1.0.4`
+Version: `1.0.5`
 
 **White_Utils** is a public Java library that provides standardized and generic utility classes to simplify common operations such as logging, formatting, and general helper functions across Java and Maven projects.
 It is published for public consumption and is also used as a standard within White Organization.
@@ -25,30 +25,31 @@ WhiteUtils is designed to be as generic and dependency-minimal as possible so it
 <dependency>
     <groupId>mx.whiteweb.sdev</groupId>
     <artifactId>white-utils</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 
 **Primary utilities (examples):**
-- `WhiteLogger` — standardized logging helpers (SLF4J-friendly usage).
+- `WhiteLoggeable` — standardized logging helpers (SLF4J-friendly usage).
 
-**Example (placeholder — to be updated when `WhiteLogger` API is finalized):**
+**Example:**
 ```java
 @Slf4j
 public class MyService implements WhiteLoggeable {
     @Override public org.slf4j.Logger getLogger() { return log;}
     
     public void myProcess(String name, int age) {
-        var log = withSignature("myProcess(name, age)");
-        log.start("Processing user {} with age {}", name, age);
-
+        // Method chaining is supported - all logging methods return LogContext
+        var log = withSignature("myProcess(name, age)")
+            .start("Processing user {} with age {}", name, age)
+        
         log.debug("User age is {}", age);
         if (age < 18) {
             log.warn("User {} is a minor", name);
         }
-        log.info("User processed successfully");
         
-        log.end("age is now {}", age);
+        log.info("User processed successfully")
+            .end("age is now {}", age);
     }
 }
 ```
@@ -109,4 +110,3 @@ _Please ask for the code standard to use as a guideline and reflect it in the pr
 
 >Please, contact me if you want to help; In general, I'm developing, maintaining, and supporting this project
 on my own with no help or support from anyone; any tip, comment, change, or help in general is well-received.
-

@@ -2,82 +2,95 @@ package org.white_sdev.utils.logging;
 
 @SuppressWarnings("unused")
 public interface WhiteLoggeable {
-    
+
     /**
      * Creates a logging context bound to a specific method signature.
      * This allows logging multiple messages without repeating the method signature.
      *
-     * @param methodSignatureRepresentation the method signature to use for all logs in this context
+     * @param methodSignatureRepresentation the method signature to use for all logs
+     *                                      in this context
      * @return a LogContext instance bound to the provided method signature
      */
     default LogContext withSignature(String methodSignatureRepresentation) {
         return new LogContext(this, methodSignatureRepresentation);
     }
-    
+
     /**
      * Logs a message at TRACE level with method signature.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void trace(String methodSignatureRepresentation, String message, Object... args){
+    default void trace(String methodSignatureRepresentation, String message, Object... args) {
         log(org.slf4j.event.Level.TRACE, methodSignatureRepresentation, message, args);
     }
 
     /**
      * Logs a message at DEBUG level with method signature.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void debug(String methodSignatureRepresentation, String message, Object... args){
+    default void debug(String methodSignatureRepresentation, String message, Object... args) {
         log(org.slf4j.event.Level.DEBUG, methodSignatureRepresentation, message, args);
     }
 
     /**
      * Logs a message at INFO level with method signature.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void info(String methodSignatureRepresentation, String message, Object... args){
+    default void info(String methodSignatureRepresentation, String message, Object... args) {
         log(org.slf4j.event.Level.INFO, methodSignatureRepresentation, message, args);
     }
 
     /**
      * Logs a message at WARN level with method signature.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void warn(String methodSignatureRepresentation, String message, Object... args){
+    default void warn(String methodSignatureRepresentation, String message, Object... args) {
         log(org.slf4j.event.Level.WARN, methodSignatureRepresentation, message, args);
     }
 
     /**
      * Logs a message at ERROR level with method signature.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void error(String methodSignatureRepresentation, String message, Object... args){
+    default void error(String methodSignatureRepresentation, String message, Object... args) {
         log(org.slf4j.event.Level.ERROR, methodSignatureRepresentation, message, args);
     }
 
     /**
      * Logs a message at ERROR level with method signature and exception.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param throwable the exception to log
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param throwable                     the exception to log
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void error(String methodSignatureRepresentation, String message, Throwable throwable, Object... args){
+    default void error(String methodSignatureRepresentation, String message, Throwable throwable, Object... args) {
         getLogger().error("::{}: " + message, combineArgs(methodSignatureRepresentation, args), throwable);
     }
 
@@ -85,21 +98,25 @@ public interface WhiteLoggeable {
      * Logs a message at ERROR level with method signature and exception.
      * Alternative parameter order for convenience.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param throwable the exception to log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param throwable                     the exception to log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void error(String methodSignatureRepresentation, Throwable throwable, String message, Object... args){
+    default void error(String methodSignatureRepresentation, Throwable throwable, String message, Object... args) {
         getLogger().error("::{}: " + message, combineArgs(methodSignatureRepresentation, args), throwable);
     }
 
     /**
      * Logs the start of a method execution with additional details.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
     default void start(String methodSignatureRepresentation, String message, Object... args) {
         trace(methodSignatureRepresentation, "Start - " + message, args);
@@ -108,7 +125,8 @@ public interface WhiteLoggeable {
     /**
      * Logs the start of a method execution.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
      */
     default void start(String methodSignatureRepresentation) {
         trace(methodSignatureRepresentation, "Start");
@@ -117,9 +135,11 @@ public interface WhiteLoggeable {
     /**
      * Logs the end of a method execution with additional details.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
     default void end(String methodSignatureRepresentation, String message, Object... args) {
         trace(methodSignatureRepresentation, "End - " + message, args);
@@ -128,7 +148,8 @@ public interface WhiteLoggeable {
     /**
      * Logs the end of a method execution.
      *
-     * @param methodSignatureRepresentation the method signature to include in the log
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
      */
     default void end(String methodSignatureRepresentation) {
         trace(methodSignatureRepresentation, "End");
@@ -137,21 +158,34 @@ public interface WhiteLoggeable {
     /**
      * Logs a message at the specified level with method signature.
      *
-     * @param level the logging level
-     * @param methodSignatureRepresentation the method signature to include in the log
-     * @param message the log message with placeholders
-     * @param args the arguments to replace placeholders in the message
+     * @param level                         the logging level
+     * @param methodSignatureRepresentation the method signature to include in the
+     *                                      log
+     * @param message                       the log message with placeholders
+     * @param args                          the arguments to replace placeholders in
+     *                                      the message
      */
-    default void log(org.slf4j.event.Level level, String methodSignatureRepresentation, String message, Object... args){
+    default void log(org.slf4j.event.Level level, String methodSignatureRepresentation, String message,
+            Object... args) {
         org.slf4j.Logger logger = getLogger();
         String formatted = "::{}: " + message;
         Object[] combinedArgs = combineArgs(methodSignatureRepresentation, args);
         switch (level) {
-            case TRACE : logger.trace(formatted, combinedArgs); break;
-            case DEBUG : logger.debug(formatted, combinedArgs); break;
-            case INFO  : logger.info(formatted, combinedArgs);  break;
-            case WARN  : logger.warn(formatted, combinedArgs);  break;
-            case ERROR : logger.error(formatted, combinedArgs); break;
+            case TRACE:
+                logger.trace(formatted, combinedArgs);
+                break;
+            case DEBUG:
+                logger.debug(formatted, combinedArgs);
+                break;
+            case INFO:
+                logger.info(formatted, combinedArgs);
+                break;
+            case WARN:
+                logger.warn(formatted, combinedArgs);
+                break;
+            case ERROR:
+                logger.error(formatted, combinedArgs);
+                break;
         }
     }
 
@@ -160,7 +194,7 @@ public interface WhiteLoggeable {
      * Used internally to prepend the method signature to the logging arguments.
      *
      * @param first the first object to include
-     * @param rest the remaining objects to include
+     * @param rest  the remaining objects to include
      * @return a new array containing all objects
      */
     default Object[] combineArgs(Object first, Object... rest) {
@@ -191,52 +225,64 @@ public interface WhiteLoggeable {
             this.methodSignature = methodSignature;
         }
 
-        public void trace(String message, Object... args) {
+        public LogContext trace(String message, Object... args) {
             loggeable.trace(methodSignature, message, args);
+            return this;
         }
 
-        public void debug(String message, Object... args) {
+        public LogContext debug(String message, Object... args) {
             loggeable.debug(methodSignature, message, args);
+            return this;
         }
 
-        public void info(String message, Object... args) {
+        public LogContext info(String message, Object... args) {
             loggeable.info(methodSignature, message, args);
+            return this;
         }
 
-        public void warn(String message, Object... args) {
+        public LogContext warn(String message, Object... args) {
             loggeable.warn(methodSignature, message, args);
+            return this;
         }
 
-        public void error(String message, Object... args) {
+        public LogContext error(String message, Object... args) {
             loggeable.error(methodSignature, message, args);
+            return this;
         }
 
-        public void error(String message, Throwable throwable, Object... args) {
+        public LogContext error(String message, Throwable throwable, Object... args) {
             loggeable.error(methodSignature, message, throwable, args);
+            return this;
         }
 
-        public void error(Throwable throwable, String message, Object... args) {
+        public LogContext error(Throwable throwable, String message, Object... args) {
             loggeable.error(methodSignature, throwable, message, args);
+            return this;
         }
 
-        public void start(String message, Object... args) {
+        public LogContext start(String message, Object... args) {
             loggeable.start(methodSignature, message, args);
+            return this;
         }
 
-        public void start() {
+        public LogContext start() {
             loggeable.start(methodSignature);
+            return this;
         }
 
-        public void end(String message, Object... args) {
+        public LogContext end(String message, Object... args) {
             loggeable.end(methodSignature, message, args);
+            return this;
         }
 
-        public void end() {
+        public LogContext end() {
             loggeable.end(methodSignature);
+            return this;
         }
 
-        public void log(org.slf4j.event.Level level, String message, Object... args) {
+        public LogContext log(org.slf4j.event.Level level, String message, Object... args) {
             loggeable.log(level, methodSignature, message, args);
+            return this;
         }
     }
 }
