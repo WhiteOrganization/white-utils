@@ -56,7 +56,7 @@ jobs:
       - name: Extract version from pom.xml
         id: version
         run: |
-          VERSION=$(xmllint --xpath "string(//project/version)" pom.xml)
+          VERSION=$(xmllint --xpath "string(/*[local-name()='project']/*[local-name()='version'])" pom.xml)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Publish to Central
