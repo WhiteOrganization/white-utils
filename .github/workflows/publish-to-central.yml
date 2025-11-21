@@ -62,11 +62,9 @@ jobs:
 
       - name: Publish to Central
         env:
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
         run: |
-          mvn -B -P maven-central \
-            -Dgpg.passphrase="${GPG_PASSPHRASE}" \
-            clean deploy
+          mvn -B -P maven-central clean deploy
 
       - name: Confirmation
         run: echo "Published version $VERSION to Maven Central."
