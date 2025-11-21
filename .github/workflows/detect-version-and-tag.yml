@@ -22,7 +22,7 @@ jobs:
       - name: Extract version from pom.xml
         id: version
         run: |
-          VERSION=$(xmllint --xpath "string(//project/version)" pom.xml)
+          VERSION=$(xmllint --xpath "string(/*[local-name()='project']/*[local-name()='version'])" pom.xml)
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Get previous version from last tag (if any)
