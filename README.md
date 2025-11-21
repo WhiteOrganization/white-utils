@@ -1,6 +1,6 @@
 # White_Utils – Java Utility Library
 
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.white-sdev/white-utils.svg)](https://search.maven.org/artifact/io.github.white-sdev/white-utils)
+[![Maven Central](https://img.shields.io/maven-central/v/mx.whiteweb.sdev/white-utils.svg)](https://search.maven.org/artifact/mx.whiteweb.sdev/white-utils)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
 
