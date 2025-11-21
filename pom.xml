@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- region project data -->
-    <groupId>org.white_sdev.templates</groupId>
+    <groupId>io.github.whiteorganization</groupId>
     <artifactId>white-utils</artifactId>
     <version>1.0.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A lightweight library containing shared and generic utility classes for Java-based projects.</description>
+    <url>https://github.com/WhiteOrganization/white-utils</url>
     <!-- This section (packaging) is defined because the project is meant to be a library and a JAR will be generated. -->
     <packaging>jar</packaging>
     <!--endregion-->
@@ -33,17 +34,11 @@
         <skipUTs>${skipTests}</skipUTs>
         <logs.path>${project.build.directory}/test-reports/logs</logs.path>
         <slf4j.version>2.0.9</slf4j.version>
+        <!-- region Maven Central deployments -->
+        <organization>WhiteOrganization</organization>
+        <repository.name>${project.artifactId}</repository.name>
+        <!-- endregion Maven Central deployments -->
         </properties>
-
-    <repositories>
-        <!-- region GiHub JitPack.io dependencies -->
-        <!-- only if you want to work with JitPack.io for the GitHub dependencies -->
-<!--            <repository>-->
-<!--                <id>jitpack.io</id>-->
-<!--                <url>https://jitpack.io</url>-->
-<!--            </repository>-->
-        <!-- endregion GiHub JitPack.io dependencies -->
-    </repositories>
 
     <dependencies>
         <!-- region Testing (No-Spring) -->
@@ -61,36 +56,182 @@
             <version>${slf4j.version}</version>
         </dependency>
         <!-- endregion SLF4J -->
-
-        <!-- region IntelliJ plugins dependencies (currently deactivated) -->
-<!--        &lt;!&ndash; these will solve the issues with IntelliJ plugin identification problems &ndash;&gt;-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-surefire-plugin</artifactId>-->
-<!--            <version>${surefire.failsafe.plugin.version}</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-failsafe-plugin</artifactId>-->
-<!--            <version>${surefire.failsafe.plugin.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-assembly-plugin</artifactId>-->
-<!--            <version>3.4.2</version>-->
-<!--        </dependency>-->
-        <!-- endregion IntelliJ plugins dependencies -->
     </dependencies>
 
+    <!-- region Maven releases support -->
+    <!-- Sonatype configuration required to deploy to maven central -->
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Obed Vazquez</name>
+            <email>obed.vazquez@gmail.com</email>
+            <organization>${organization}</organization>
+            <organizationUrl>https://github.com/${organization}/</organizationUrl>
+        </developer>
+    </developers>
+
+    <!-- You also require Maven settings.xml configuration to authenticate when performing a `mvn release:prepare` -->
+    <scm>
+        <connection>scm:git:https://github.com/${organization}/${repository.name}.git</connection>
+        <developerConnection>scm:git:https://github.com/${organization}/${repository.name}.git</developerConnection>
+        <url>https://github.com/${organization}/${repository.name}/tree/main</url>
+        <tag>${project.artifactId}-${project.version}</tag>
+    </scm>
+
+    <!-- in settings.xml you need this configuration:
+    <servers>
+        <server>
+          <id>central</id>
+        <username>${env.CENTRAL_USERNAME}</username>
+        <password>${env.CENTRAL_PASSWORD}</password>
+    </server>
+            </servers>
+
+    <profiles>
+    <profile>
+        <id>release</id>
+        <activation>
+            <activeByDefault>false</activeByDefault>
+        </activation>
+        <properties>
+            <gpg.executable>gpg</gpg.executable>
+            <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+        </properties>
+    </profile>
+    </profiles>
+
+    <activeProfiles>
+    <activeProfile>release</activeProfile>
+    </activeProfiles>
+    -->
+    <!-- in this repo's case local deployments are not being used, instead this is replaced by the
+        detect-version-and-tag.yml & publish-to-central.yml workflows.
+    -->
+
+    <!-- endregion Maven releases support -->
 
     <!-- region Profiles -->
     <profiles>
+        <!-- region Sonatype Maven Central Profile -->
+        <profile>
+            <id>maven-central</id>
+            <activation>
+                <property>
+                    <name>target</name>
+                    <value>sonatype</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- region Sonatype Plugins -->
+                    <!-- region Maven Release Plugin -->
+                    <!-- we can now use `mvn release:clean release:prepare -D target=sonatype`
+                        followed by `mvn release:perform -D target=sonatype` -->
+                    <!-- https://central.sonatype.org/publish/publish-maven/#performing-a-release-deployment-with-the-maven-release-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <goals>deploy</goals>
+                        </configuration>
+                    </plugin>
+                    <!-- endregion Maven Release Plugin -->
+
+                    <!-- region Sonatype Nexus Config -->
+                    <!-- https://central.sonatype.org/publish/publish-maven/#distribution-management-and-authentication -->
+                    <!-- https://central.sonatype.org/publish/publish-maven/#nexus-staging-maven-plugin-for-deployment-and-release -->
+                    <!-- for SNAPSHOT's use `mvn clean deploy -D target=sonatype` -->
+                    <!-- for Releases: use `mvn versions:set -DnewVersion=1.x.x -D target=sonatype`
+                        followed by `mvn clean deploy -D target=sonatype` -->
+<!--                    <plugin>-->
+<!--                        <groupId>org.sonatype.plugins</groupId>-->
+<!--                        <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--                        &lt;!&ndash; Versions: https://search.maven.org/artifact/org.sonatype.plugins/nexus-staging-maven-plugin &ndash;&gt;-->
+<!--                        <version>1.7.0</version>-->
+<!--                        <extensions>true</extensions>-->
+<!--                        <configuration>-->
+<!--                            <serverId>ossrh</serverId>-->
+<!--                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+<!--                            <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+<!--                        </configuration>-->
+<!--                    </plugin>-->
+                    <!-- endregion Sonatype Nexus Config -->
+
+                    <!-- region Sonatype SRC+Javadocs plugin -->
+                    <!-- https://central.sonatype.org/publish/publish-maven/#javadoc-and-sources-attachments
+                        The sources and Javadocs will be included in the deployment  -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.3.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.11.2</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <additionalOptions>
+                                <additionalOption>-Xdoclint:all</additionalOption>
+                                <additionalOption>-Xdoclint:-missing</additionalOption>
+                            </additionalOptions>
+                        </configuration>
+                    </plugin>
+                    <!-- endregion Sonatype SRC+Javadocs plugin -->
+
+                    <!-- region GPG Signed -->
+                    <!-- relies on the gpg command being installed and the GPG credentials in settings.xml
+                        https://central.sonatype.org/publish/publish-maven/#gpg-signed-components -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>3.2.7</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- endregion GPG Signed -->
+
+                    <!-- endregion Sonatype Plugins -->
+
+                </plugins>
+            </build>
+        </profile>
+        <!-- endregion Sonatype Maven Central Profile -->
+
+
         <profile>
             <id>disable-java8-doc-lint</id>
             <activation>
@@ -138,7 +279,7 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <!-- WARNING: add release property for 1.9 and older versions -->
-                    <release>${java.version}</release>
+<!--                    <release>${java.version}</release>-->
                 </configuration>
             </plugin>
             <!-- endregion -->
@@ -247,6 +388,31 @@
                 </configuration>
             </plugin>
             <!-- endregion Maven runs Integration Tests -->
+
+            <!-- region Maven Central Deployments-->
+            <!-- https://central.sonatype.org/publish/publish-portal-maven/ -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.9.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                    <waitUntil>published</waitUntil>
+                </configuration>
+            </plugin>
+
+            <!-- endregion Maven Central Deployments-->
+
+
+            <!-- region Maven releases support -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <!-- endregion Maven releases support -->
         </plugins>
     </build>
 

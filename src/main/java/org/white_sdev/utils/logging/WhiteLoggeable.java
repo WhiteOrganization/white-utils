@@ -147,11 +147,11 @@ public interface WhiteLoggeable {
         String formatted = "::{}: " + message;
         Object[] combinedArgs = combineArgs(methodSignatureRepresentation, args);
         switch (level) {
-            case TRACE : logger.trace(formatted, combinedArgs);
-            case DEBUG : logger.debug(formatted, combinedArgs);
-            case INFO  : logger.info(formatted, combinedArgs);
-            case WARN  : logger.warn(formatted, combinedArgs);
-            case ERROR : logger.error(formatted, combinedArgs);
+            case TRACE : logger.trace(formatted, combinedArgs); break;
+            case DEBUG : logger.debug(formatted, combinedArgs); break;
+            case INFO  : logger.info(formatted, combinedArgs);  break;
+            case WARN  : logger.warn(formatted, combinedArgs);  break;
+            case ERROR : logger.error(formatted, combinedArgs); break;
         }
     }
 
