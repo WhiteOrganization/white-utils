@@ -56,31 +56,6 @@
             <version>${slf4j.version}</version>
         </dependency>
         <!-- endregion SLF4J -->
-
-        <!-- region IntelliJ plugins dependencies (currently deactivated) -->
-<!--        &lt;!&ndash; these will solve the issues with IntelliJ plugin identification problems &ndash;&gt;-->
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-surefire-plugin</artifactId>-->
-<!--            <version>${surefire.failsafe.plugin.version}</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-failsafe-plugin</artifactId>-->
-<!--            <version>${surefire.failsafe.plugin.version}</version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.maven.plugins</groupId>-->
-<!--            <artifactId>maven-assembly-plugin</artifactId>-->
-<!--            <version>3.4.2</version>-->
-<!--        </dependency>-->
-        <!-- endregion IntelliJ plugins dependencies -->
     </dependencies>
 
     <!-- region Maven releases support -->
@@ -222,11 +197,10 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <additionalparam>-Xdoclint:all -Xdoclint:none</additionalparam>
-                            <additionalJOptions>
-                                <additionalJOption>-Xdoclint:all</additionalJOption>
-                                <additionalJOption>-Xdoclint:-missing</additionalJOption>
-                            </additionalJOptions>
+                            <additionalOptions>
+                                <additionalOption>-Xdoclint:all</additionalOption>
+                                <additionalOption>-Xdoclint:-missing</additionalOption>
+                            </additionalOptions>
                         </configuration>
                     </plugin>
                     <!-- endregion Sonatype SRC+Javadocs plugin -->
