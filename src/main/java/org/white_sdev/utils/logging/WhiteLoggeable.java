@@ -14,7 +14,7 @@ package org.white_sdev.utils.logging;
  *         var log = withSignature("myProcess(name, age)")
  *             .start("Processing user {} with age {}", name, age);
  *
- *         if (age < 18) {
+ *         if (age &lt; 18) {
  *             log.warn("User {} is a minor", name);
  *         }
  *     }
