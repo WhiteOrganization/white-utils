@@ -1,31 +1,25 @@
 package org.white_sdev.utils.logging;
 
 /**
- * <p>
- * Usage Sample:
- * </p>
- *
- * <pre>{@code
- * @Slf4j
+ * <pre><code>
+ * &#64;Slf4j
  * public class MyService implements WhiteLoggeable {
- *     @Override
- *     public org.slf4j.Logger getLogger() { return log; }
+ *
+ *     &#64;Override
+ *     public org.slf4j.Logger getLogger() {
+ *         return log;
+ *     }
  *
  *     public void myProcess(String name, int age) {
- *         // Method chaining is supported - all logging methods return LogContext
  *         var log = withSignature("myProcess(name, age)")
  *             .start("Processing user {} with age {}", name, age);
  *
- *         log.debug("User age is {}", age);
  *         if (age < 18) {
  *             log.warn("User {} is a minor", name);
  *         }
- *
- *         log.info("User processed successfully")
- *             .end("age is now {}", age);
  *     }
  * }
- * }</pre>
+ * </code></pre>
  */
 @SuppressWarnings("unused")
 public interface WhiteLoggeable {
