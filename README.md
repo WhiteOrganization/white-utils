@@ -9,7 +9,7 @@ A lightweight library containing shared and generic utility classes for Java-bas
 ## 1) What is this repository for?
 
 ### 1.1) Quick summary
-Version: `1.0.5`
+Version: `1.0.6`
 
 **White_Utils** is a public Java library that provides standardized and generic utility classes to simplify common operations such as logging, formatting, and general helper functions across Java and Maven projects.
 It is published for public consumption and is also used as a standard within White Organization.
@@ -25,7 +25,7 @@ WhiteUtils is designed to be as generic and dependency-minimal as possible so it
 <dependency>
     <groupId>mx.whiteweb.sdev</groupId>
     <artifactId>white-utils</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
 </dependency>
 ```
 
