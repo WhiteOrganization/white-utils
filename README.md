@@ -73,13 +73,38 @@ This library uses:
 
 
 ### 3.3) Configuration Steps
-#### 3.3.1) Environment Configuration
-_Please execute the `main-protection-win.bat` file in the root directory of the project
-to protect the main branch from being corrupted unintentionally._
+#### 3.3.1) `main` Branch Protection
+In order for us to ensure that the `main` branch isn't accidentally corrupted, we're implementing a check that will prevent users from pushing directly to `main` and forces every change to be merged with a pull request.
 
-You will require all the Development elements in your environment.
+You can execute this file: [`main-protection-win.bat`](main-protection-win.bat) before editing any text, code, branches, or anything in this repository to help you with these cases.
 
-An IDE with Maven support is suggested for you to make any modifications to the code.
+#### 3.3.2) Git Alias
+When executing [`main-protection-win.bat`](main-protection-win.bat), the script will open a file in notepad.
+
+Only if you haven't done so already, paste the following git alias script at the end of that file :
+
+```
+[alias]
+    main2branch = "!f() { \
+        if [ \"$#\" -ne 1 ]; then \
+            echo \"Usage: git main2branch <new_branch_name>\"; \
+            exit 1; \
+        fi; \
+        current_branch=$(git rev-parse --abbrev-ref HEAD); \
+        if [ \"$current_branch\" != \"main\" ]; then \
+            echo \"Error: You must be on 'main' branch to use this alias.\"; \
+            exit 1; \
+        fi; \
+        new_branch=$1; \
+        git fetch origin main || exit 1; \
+        git checkout -b \"$new_branch\" || exit 1; \
+        git reset --hard origin/main || exit 1; \
+        git checkout main || exit 1; \
+        git reset --hard origin/main || exit 1; \
+        echo \"Moved local-only commits to branch '$new_branch'.\"; \
+    }; f"
+```
+This script creates a new alias, `main2branch`, that takes all local commits on main, that aren't present in origin, and moves them to a new branch, with a customizable name. Usage: `git main2branch new-branch`. This is useful for situations when you accidentally commit on `main` locally, and need to move those changes to the new branch.
 
 ## 4) How to Deploy?
 The deployment process is automated at this point, once the new version is detected to be merge into main from a PR, a GitHub action will build the artifact and upload it to Maven Central.
