@@ -84,6 +84,7 @@ When executing [`main-protection-win.bat`](main-protection-win.bat), the script 
 Only if you haven't done so already, paste the following git alias script at the end of that file :
 
 ```
+
 [alias]
     main2branch = "!f() { \
         if [ \"$#\" -ne 1 ]; then \
@@ -97,12 +98,12 @@ Only if you haven't done so already, paste the following git alias script at the
         fi; \
         new_branch=$1; \
         git fetch origin main || exit 1; \
-        git checkout -b \"$new_branch\" || exit 1; \
-        git reset --hard origin/main || exit 1; \
-        git checkout main || exit 1; \
+        git branch \"$new_branch\" || exit 1; \
         git reset --hard origin/main || exit 1; \
         echo \"Moved local-only commits to branch '$new_branch'.\"; \
+        git checkout \"$new_branch\" || exit 1; \
     }; f"
+
 ```
 This script creates a new alias, `main2branch`, that takes all local commits on main, that aren't present in origin, and moves them to a new branch, with a customizable name. Usage: `git main2branch new-branch`. This is useful for situations when you accidentally commit on `main` locally, and need to move those changes to the new branch.
 
