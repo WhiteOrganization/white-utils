@@ -2,7 +2,9 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/mx.whiteweb.sdev/white-utils.svg)](https://search.maven.org/artifact/mx.whiteweb.sdev/white-utils)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
+[![Build Main](https://github.com/WhiteOrganization/white-utils/actions/workflows/build-main.yml/badge.svg)](https://github.com/WhiteOrganization/white-utils/actions/workflows/build-main.yml)
+
+
 
 A lightweight library containing shared and generic utility classes for Java-based projects.
 
