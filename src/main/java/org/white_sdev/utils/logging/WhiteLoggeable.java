@@ -5,10 +5,7 @@ package org.white_sdev.utils.logging;
  * &#64;Slf4j
  * public class MyService implements WhiteLoggeable {
  *
- *     &#64;Override
- *     public org.slf4j.Logger getLogger() {
- *         return log;
- *     }
+ *     &#64;Override public org.slf4j.Logger getLogger() { return log; }
  *
  *     public void myProcess(String name, int age) {
  *         var log = withSignature("myProcess(name, age)")

@@ -2,14 +2,16 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/mx.whiteweb.sdev/white-utils.svg)](https://search.maven.org/artifact/mx.whiteweb.sdev/white-utils)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](#)
+[![Build Main](https://github.com/WhiteOrganization/white-utils/actions/workflows/build-main.yml/badge.svg)](https://github.com/WhiteOrganization/white-utils/actions/workflows/build-main.yml)
+
+
 
 A lightweight library containing shared and generic utility classes for Java-based projects.
 
 ## 1) What is this repository for?
 
 ### 1.1) Quick summary
-Version: `1.0.8`
+Version: `1.0.9`
 
 **White_Utils** is a public Java library that provides standardized and generic utility classes to simplify common operations such as logging, formatting, and general helper functions across Java and Maven projects.
 It is published for public consumption and is also used as a standard within White Organization.
@@ -41,7 +43,7 @@ public class MyService implements WhiteLoggeable {
     public void myProcess(String name, int age) {
         // Method chaining is supported - all logging methods return LogContext
         var log = withSignature("myProcess(name, age)")
-            .start("Processing user {} with age {}", name, age)
+            .start("Processing user {} with age {}", name, age);
         
         log.debug("User age is {}", age);
         if (age < 18) {
@@ -71,13 +73,39 @@ This library uses:
 
 
 ### 3.3) Configuration Steps
-#### 3.3.1) Environment Configuration
-_Please execute the `main-protection-win.bat` file in the root directory of the project
-to protect the main branch from being corrupted unintentionally._
+#### 3.3.1) `main` Branch Protection
+In order for us to ensure that the `main` branch isn't accidentally corrupted, we're implementing a check that will prevent users from pushing directly to `main` and forces every change to be merged with a pull request.
 
-You will require all the Development elements in your environment.
+You can execute this file: [`main-protection-win.bat`](main-protection-win.bat) before editing any text, code, branches, or anything in this repository to help you with these cases.
 
-An IDE with Maven support is suggested for you to make any modifications to the code.
+#### 3.3.2) Git Alias
+When executing [`main-protection-win.bat`](main-protection-win.bat), the script will open a file in notepad.
+
+Only if you haven't done so already, paste the following git alias script at the end of that file :
+
+```
+
+[alias]
+    main2branch = "!f() { \
+        if [ \"$#\" -ne 1 ]; then \
+            echo \"Usage: git main2branch <new_branch_name>\"; \
+            exit 1; \
+        fi; \
+        current_branch=$(git rev-parse --abbrev-ref HEAD); \
+        if [ \"$current_branch\" != \"main\" ]; then \
+            echo \"Error: You must be on 'main' branch to use this alias.\"; \
+            exit 1; \
+        fi; \
+        new_branch=$1; \
+        git fetch origin main || exit 1; \
+        git branch \"$new_branch\" || exit 1; \
+        git reset --hard origin/main || exit 1; \
+        echo \"Moved local-only commits to branch '$new_branch'.\"; \
+        git checkout \"$new_branch\" || exit 1; \
+    }; f"
+
+```
+This script creates a new alias, `main2branch`, that takes all local commits on main, that aren't present in origin, and moves them to a new branch, with a customizable name. Usage: `git main2branch new-branch`. This is useful for situations when you accidentally commit on `main` locally, and need to move those changes to the new branch.
 
 ## 4) How to Deploy?
 The deployment process is automated at this point, once the new version is detected to be merge into main from a PR, a GitHub action will build the artifact and upload it to Maven Central.
