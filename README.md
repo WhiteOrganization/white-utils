@@ -43,7 +43,7 @@ public class MyService implements WhiteLoggeable {
     public void myProcess(String name, int age) {
         // Method chaining is supported - all logging methods return LogContext
         var log = withSignature("myProcess(name, age)")
-            .start("Processing user {} with age {}", name, age)
+            .start("Processing user {} with age {}", name, age);
         
         log.debug("User age is {}", age);
         if (age < 18) {
